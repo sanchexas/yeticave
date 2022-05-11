@@ -1,7 +1,58 @@
 <?php
 $is_auth = rand(0, 1);
-
-$user_name = ''; // укажите здесь ваше имя
+$catArray = array("Доски и лыжи","Крепления", "Ботинки", "Одежда", "Инструменты", "Разное");
+//$cssClassArray = array("boards","attachment","boots","clothing","tools","other");
+$cssClassArray = [
+    [] //ДОДЕЛАТЬ!!!
+];
+$catAssociativeArray = [
+    [
+        "name" => "2014 Rossignol District Snowboard",
+        "category" => $catArray[0],
+        "price" => "10999",
+        "imageUrl" => "img/lot-1.jpg"
+    ],
+    [
+        "name" => "DC Ply Mens 2016/2017 Snowboard",
+        "category" => $catArray[0],
+        "price" => "159999",
+        "imageUrl" => "img/lot-2.jpg"
+    ],
+    [
+        "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
+        "category" => $catArray[1],
+        "price" => "8000",
+        "imageUrl" => "img/lot-3.jpg"
+    ],
+    [
+        "name" => "Ботинки для сноуборда DC Mutiny Charocal",
+        "category" => $catArray[2],
+        "price" => "10999",
+        "imageUrl" => "img/lot-4.jpg"
+    ],
+    [
+        "name" => "Куртка для сноуборда DC Mutiny Charocal",
+        "category" => $catArray[3],
+        "price" => "7500",
+        "imageUrl" => "img/lot-5.jpg"
+    ],
+    [
+        "name" => "Маска Oakley Canopy",
+        "category" => $catArray[5],
+        "price" => "5400",
+        "imageUrl" => "img/lot-6.jpg"
+    ]
+];
+//$catDoubleArray = array(
+//    array("2014 Rossignol District Snowboard", "Доски и лыжи", 10999, "img/lot-1.jpg"),
+//    array("DC Ply Mens 2016/2017 Snowboard", "Доски и лыжи", 159999, "img/lot-2.jpg"),
+//    array("Крепления Union Contact Pro 2015 года размер L/XL", "Крепления", 8000, "img/lot-3.jpg"),
+//    array("Ботинки для сноуборда DC Mutiny Charocal", "Ботинки", 10999, "img/lot-4.jpg"),
+//    array("Куртка для сноуборда DC Mutiny Charocal", "Одежда", 7500, "img/lot-5.jpg"),
+//    array("Маска Oakley Canopy", "Разное", 5400, "img/lot-6.jpg")
+//);
+$user_name = 'ACEDIA'; // укажите здесь ваше имя
+$user_image = 'img/user.jpg'; // укажите здесь ваше имя
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -27,9 +78,30 @@ $user_name = ''; // укажите здесь ваше имя
         <a class="main-header__add-lot button" href="pages/add-lot.html">Добавить лот</a>
 
         <nav class="user-menu">
-
         <!-- здесь должен быть PHP код для показа меню и данных пользователя -->
+            <?php
+            if ($is_auth == 1){
+                ?>
+                    <div class='user-menu__image'>
+                        <img src='<?=$user_image?>' width='40' height='40' alt='Пользователь'>
+                    </div>
+                    <div class='user-menu__logged'>
+                        <p><?=$user_name?></p>
+                    </div>
+            <?php
+            }
+            else {
+                ?>
+                    <ul class='user-menu__list'>
+                        <li class='user-menu__item'>
+                            <a href='#'>Регистрация</a>
+                        </li>
+                        <li class='user-menu__item'>
+                            <a href='#'>Вход</a>
+                        </li>
+                    </ul>
 
+            <?php } ?>
         </nav>
     </div>
 </header>
@@ -39,8 +111,15 @@ $user_name = ''; // укажите здесь ваше имя
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
+            <?php
+            foreach($catArray as $cat) {
+                ?><li class="promo__item promo__item--<?=$cssClassArray?>">
+                <a class="promo__link" href="pages/all-lots.html"><?=$cat?></a>
+                </li><?php
+            }
+            ?>
             <!--заполните этот список из массива категорий-->
-            <li class="promo__item promo__item--boards">
+            <li class="promo__item promo__item--<??>">
                 <a class="promo__link" href="pages/all-lots.html">Имя категории</a>
             </li>
         </ul>
@@ -51,24 +130,27 @@ $user_name = ''; // укажите здесь ваше имя
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <li class="lots__item lot">
+            <?php
+            foreach ($catAssociativeArray as $cA){
+                ?><li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="" width="350" height="260" alt="">
+                    <img src="<?=$cA['imageUrl']?>" width="350" height="260" alt="">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category">Название категории</span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html">Название товара</a></h3>
+                    <span class="lot__category"><?=$cA["category"]?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$cA["name"] ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost">цена<b class="rub">р</b></span>
+                            <span class="lot__amount">Стартовая Цена</span>
+                            <span class="lot__cost"><?=$cA['price']?><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
                         </div>
                     </div>
                 </div>
-            </li>
+                </li>
+            <?php }?>
         </ul>
     </section>
 </main>
@@ -78,9 +160,13 @@ $user_name = ''; // укажите здесь ваше имя
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <li class="nav__item">
-                <a href="pages/all-lots.html">Название категории</a>
-            </li>
+            <?php
+            foreach($catArray as $cat) {
+                ?><li class="nav__item">
+                <a href="pages/all-lots.html"><?=$cat?></a>
+                </li>
+            <?php }
+            ?>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
