@@ -1,44 +1,59 @@
 <?php
 $is_auth = rand(0, 1);
-$catArray = array("Доски и лыжи","Крепления", "Ботинки", "Одежда", "Инструменты", "Разное");
-//$cssClassArray = array("boards","attachment","boots","clothing","tools","other");
-$cssClassArray = [
-    [] //ДОДЕЛАТЬ!!!
+
+function priceFormat($price){
+    $result = ceil($price);
+    if ($price < 1000){
+        return $result."<b class='rub'>р</b>";
+    }
+    else{
+        $format = number_format($result, 0, ',', ' ');
+        return  $format."<b class='rub'>р</b>";
+    }
+}
+$catItemArray = ["Доски и лыжи","Крепления","Ботинки","Одежда", "Разное"];
+$categoryArray = [
+    ["category"=>"Доски и лыжи","Image"=>"boards"],
+    ["category"=>"Крепления","Image"=>"attachment"],
+    ["category"=>"Ботинки","Image"=>"boots"],
+    ["category"=>"Одежда","Image"=>"clothing"],
+    ["category"=>"Инструменты","Image"=>"tools"],
+    ["category"=>"Разное","Image"=>"other"],
 ];
 $catAssociativeArray = [
     [
         "name" => "2014 Rossignol District Snowboard",
-        "category" => $catArray[0],
+        "category" => $catItemArray[0],
         "price" => "10999",
         "imageUrl" => "img/lot-1.jpg"
     ],
     [
         "name" => "DC Ply Mens 2016/2017 Snowboard",
-        "category" => $catArray[0],
+        "category" => $catItemArray[0],
         "price" => "159999",
         "imageUrl" => "img/lot-2.jpg"
     ],
     [
         "name" => "Крепления Union Contact Pro 2015 года размер L/XL",
-        "category" => $catArray[1],
+        "category" => $catItemArray[1],
         "price" => "8000",
         "imageUrl" => "img/lot-3.jpg"
     ],
     [
         "name" => "Ботинки для сноуборда DC Mutiny Charocal",
-        "category" => $catArray[2],
+        "category" => $catItemArray[2],
         "price" => "10999",
         "imageUrl" => "img/lot-4.jpg"
     ],
     [
         "name" => "Куртка для сноуборда DC Mutiny Charocal",
-        "category" => $catArray[3],
+        "category" => $catItemArray[3],
         "price" => "7500",
         "imageUrl" => "img/lot-5.jpg"
     ],
     [
         "name" => "Маска Oakley Canopy",
-        "category" => $catArray[5],
+        "category" => $catItemArray[5],
         "price" => "5400",
         "imageUrl" => "img/lot-6.jpg"
     ]
@@ -112,9 +127,9 @@ $user_image = 'img/user.jpg'; // укажите здесь ваше имя
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <?php
-            foreach($catArray as $cat) {
-                ?><li class="promo__item promo__item--<?=$cssClassArray?>">
-                <a class="promo__link" href="pages/all-lots.html"><?=$cat?></a>
+            foreach($categoryArray as $cat) {
+                ?><li class="promo__item promo__item--<?=$cat["Image"]?>">
+                <a class="promo__link" href="pages/all-lots.html"><?=$cat["category"]?></a>
                 </li><?php
             }
             ?>
@@ -142,7 +157,7 @@ $user_image = 'img/user.jpg'; // укажите здесь ваше имя
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая Цена</span>
-                            <span class="lot__cost"><?=$cA['price']?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=priceFormat($cA['price'])?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -161,11 +176,11 @@ $user_image = 'img/user.jpg'; // укажите здесь ваше имя
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
             <?php
-            foreach($catArray as $cat) {
-                ?><li class="nav__item">
-                <a href="pages/all-lots.html"><?=$cat?></a>
-                </li>
-            <?php }
+            foreach($categoryArray as $cat) {
+                ?><li class="promo__item promo__item--<?=$cat["Image"]?>">
+                <a class="promo__link" href="pages/all-lots.html"><?=$cat["category"]?></a>
+                </li><?php
+            }
             ?>
         </ul>
     </nav>
