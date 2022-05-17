@@ -1,0 +1,23 @@
+
+
+1) SELECT * FROM `category`;  --получить категории 
+
+2) SELECT a.title,
+       lot_price,
+       image,
+       (sum(b.lot_price)+a.price)Последняя_ставка,
+       count(b.lot_price)Количество_ставок,
+       c.title,
+       winner_id
+from lot as a
+       left join bet b
+                 on a.id_lot = b.lot_id
+       inner join category c on a.category_id = c.id_category
+group by a.title, price, image,creation_date,finish_date, c.title, winner_id
+having ISNULL(finish_date)
+order by creation_date desc; 
+
+
+3) select `id_lot`, `category`.`title` FROM lot INNER JOIN category ON `lot`.`category_id` = `category`.`id_category`; -- получить id лота и название категории по id 
+4) update `lot` SET `title`= 'SCOOTERS SUCKS' WHERE `id_lot` = 1;  UPDATE `lot` SET `title`= '2014 Rossignol District Snowboard' WHERE `id_lot` = 1; -- обновить название лота по его идентификатору
+5) SELECT `id_bet`,`bet`.`user_id`,`creation_date`,`price` FROM `bet` INNER JOIN `users` ON `bet`.`user_id` = `users`.`id_user` WHERE DATE(`creation_date`) = '2022-05-17'; -- получить список самых свежих ставок для лота по его идентификатору; 

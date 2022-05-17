@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 16 2022 г., 14:33
+-- Время создания: Май 17 2022 г., 15:48
 -- Версия сервера: 5.7.33-log
 -- Версия PHP: 7.1.33
 
@@ -28,12 +28,24 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `bet` (
-  `id` bigint(20) NOT NULL,
+  `id_bet` bigint(20) NOT NULL,
   `creation_date` datetime NOT NULL,
-  `price` double NOT NULL,
+  `lot_price` double NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `lot_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `bet`
+--
+
+INSERT INTO `bet` (`id_bet`, `creation_date`, `lot_price`, `user_id`, `lot_id`) VALUES
+(7, '2022-05-17 13:55:43', 11999, 2, 1),
+(8, '2022-05-17 13:57:17', 159999, 2, 2),
+(9, '2022-05-17 13:57:41', 8000, 1, 3),
+(10, '2022-05-17 13:58:07', 10999, 1, 4),
+(11, '2022-05-17 13:58:29', 7500, 2, 7),
+(12, '2022-05-17 13:58:51', 5400, 1, 8);
 
 -- --------------------------------------------------------
 
@@ -42,9 +54,21 @@ CREATE TABLE `bet` (
 --
 
 CREATE TABLE `category` (
-  `id` bigint(20) NOT NULL,
+  `id_category` bigint(20) NOT NULL,
   `title` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `category`
+--
+
+INSERT INTO `category` (`id_category`, `title`) VALUES
+(1, 'Доски и лыжи'),
+(2, 'Крепления'),
+(3, 'Ботинки'),
+(4, 'Одежда'),
+(5, 'Инструменты'),
+(6, 'Разное');
 
 -- --------------------------------------------------------
 
@@ -53,7 +77,7 @@ CREATE TABLE `category` (
 --
 
 CREATE TABLE `lot` (
-  `id` bigint(20) NOT NULL,
+  `id_lot` bigint(20) NOT NULL,
   `title` varchar(150) NOT NULL,
   `description` varchar(1000) NOT NULL,
   `image` varchar(500) NOT NULL,
@@ -66,6 +90,18 @@ CREATE TABLE `lot` (
   `category_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Дамп данных таблицы `lot`
+--
+
+INSERT INTO `lot` (`id_lot`, `title`, `description`, `image`, `price`, `bet_step`, `creation_date`, `finish_date`, `user_id`, `winner_id`, `category_id`) VALUES
+(1, '2014 Rossignol District Snowboard', 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 10999, 1, '2022-05-17 13:25:11', '2022-05-17 13:25:11', 1, 2, 1),
+(2, 'DC Ply Mens 2016/2017 Snowboard', 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 159999, 2, '2022-05-17 13:31:10', '2022-05-17 13:31:10', 2, 1, 1),
+(3, 'Крепления Union Contact Pro 2015 года размер L/XL', 'Крепления Union Contact Pro 2015 года размер L/XL\', \'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 8000, 1, '2022-05-17 13:39:20', '2022-05-17 13:39:20', 2, 1, 2),
+(4, 'Ботинки для сноуборда DC Mutiny Charocal', 'Крепления Union Contact Pro 2015 года размер L/XL\', \'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 10999, 1, '2022-05-17 13:39:20', '2022-05-17 13:39:20', 1, 2, 3),
+(7, 'Куртка для сноуборда DC Mutiny Charocal', 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 7500, 1, '2022-05-17 13:48:09', '2022-05-17 13:48:09', 2, 1, 4),
+(8, 'Маска Oakley Canopy', 'Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив снег мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот снаряд отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом кэмбер позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется, просто посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла равнодушным.', 'img/lot-1.jpg', 5400, 1, '2022-05-17 13:28:44', '2022-05-17 13:28:44', 2, 1, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -73,7 +109,7 @@ CREATE TABLE `lot` (
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
+  `id_user` bigint(20) NOT NULL,
   `name` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
@@ -83,6 +119,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `avatar`, `contacts`, `registration_date`) VALUES
+(1, 'Jesus', 'jesus@mail.sky', '12345', 'imagod.jpg', '+7-777-777-77-77', '2022-05-16 15:13:34'),
+(2, 'Maria', 'maria@mail.sky', '54321', 'iconic.jpg', '+7-777-777-77-77', '2022-05-16 15:36:17');
+
+--
 -- Индексы сохранённых таблиц
 --
 
@@ -90,7 +134,7 @@ CREATE TABLE `users` (
 -- Индексы таблицы `bet`
 --
 ALTER TABLE `bet`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_bet`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `lot_id` (`lot_id`);
 
@@ -98,13 +142,13 @@ ALTER TABLE `bet`
 -- Индексы таблицы `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_category`);
 
 --
 -- Индексы таблицы `lot`
 --
 ALTER TABLE `lot`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`id_lot`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `winner_id` (`winner_id`),
   ADD KEY `category_id` (`category_id`);
@@ -113,7 +157,7 @@ ALTER TABLE `lot`
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -123,25 +167,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `bet`
 --
 ALTER TABLE `bet`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_bet` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_category` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `lot`
 --
 ALTER TABLE `lot`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lot` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -151,16 +195,16 @@ ALTER TABLE `users`
 -- Ограничения внешнего ключа таблицы `bet`
 --
 ALTER TABLE `bet`
-  ADD CONSTRAINT `bet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `bet_ibfk_2` FOREIGN KEY (`lot_id`) REFERENCES `lot` (`id`);
+  ADD CONSTRAINT `bet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `bet_ibfk_2` FOREIGN KEY (`lot_id`) REFERENCES `lot` (`id_lot`);
 
 --
 -- Ограничения внешнего ключа таблицы `lot`
 --
 ALTER TABLE `lot`
-  ADD CONSTRAINT `lot_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `lot_ibfk_2` FOREIGN KEY (`winner_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `lot_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+  ADD CONSTRAINT `lot_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `lot_ibfk_2` FOREIGN KEY (`winner_id`) REFERENCES `users` (`id_user`),
+  ADD CONSTRAINT `lot_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
